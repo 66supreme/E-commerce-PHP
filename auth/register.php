@@ -11,7 +11,7 @@
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $insert = $conn->prepare("INSERT INTO TO users(username,email,mypassword)) VALUES(:username, :email, :mypassword)");
+            $insert = $conn->prepare("INSERT INTO users (username, email, mypassword) VALUES (:username, :email, :mypassword)");
             $insert->execute([
                 ':username'    => $username,
                 ':email'       => $email,
@@ -75,13 +75,13 @@
                 <div class="">
                     <label for="" class="col-sm-2 col-form-label">Username</label>
                     <div class="">
-                        <input type="text" name="username" class="form-control" id="" value="">
+                        <input type="text" name="username" class="form-control" >
                     </div>
                 </div>
                 <div class="">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                     <div class="">
-                        <input type="email" name="email" class="form-control" id="" value="">
+                        <input type="email" name="email" class="form-control" >
                     </div>
                 </div>
                 <div class="">
