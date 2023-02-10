@@ -11,7 +11,7 @@
             $email = $_POST['email'];
             $password = $_POST['password'];
 
-            $insert = $conn->prepare("INSERT INTO TO user(username,email,mypassword)) VALUES(:username, :email, :mypassword)");
+            $insert = $conn->prepare("INSERT INTO TO users(username,email,mypassword)) VALUES(:username, :email, :mypassword)");
             $insert->execute([
                 ':username'    => $username,
                 ':email'       => $email,
