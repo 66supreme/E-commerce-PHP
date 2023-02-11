@@ -12,18 +12,18 @@
 
    <div class="row mt-5">
 
-       <?php foreach ($allRow as $produt) : ?>
+       <?php foreach ($allRow as $product) : ?>
 
            <div class="col-lg-4 col-md-6 col-sm-10 offset-md-0 offset-sm-1">
                <div class="card">
-                   <img height="213px" class="card-img-top" src="images/<?php echo $produt->image ?>">
+                   <img height="213px" class="card-img-top" src="<?php echo bookstore ; ?>/images/<?php echo $product->image ?>">
                    <div class="card-body">
-                       <h5 class="d-inline"><b><?php echo $produt->name ?></b> </h5>
+                       <h5 class="d-inline"><b><?php echo $product->name ?></b> </h5>
                        <h5 class="d-inline">
-                           <div class="text-muted d-inline">($<?php echo $produt->price ?>/item)</div>
+                           <div class="text-muted d-inline">($<?php echo $product->price ?>/item)</div>
                        </h5>
-                       <p><?php echo $produt->description ?></p>
-                       <a href="#" class="btn btn-primary w-100 rounded my-2"> More<i class="fas fa-arrow-right"></i> </a>
+                       <p><?php echo $product->description ?></p>
+                       <a href="<?php echo bookstore ; ?>/shopping/single.php?id=<?php echo $product->id ?>" class="btn btn-primary w-100 rounded my-2"> Plus<i class="fas fa-arrow-right"></i> </a>
                    </div>
                </div>
            </div>
