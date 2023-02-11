@@ -3,25 +3,29 @@
 
 <?php
 
-    if(isset($_POST['submit'])){
-        if (empty($_POST['username']) OR empty($_POST['email']) OR empty($_POST['password'])) {
-            echo "<script>alert('Un ou plusieurs champs sont vides');</script>";
-        }else{
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+if (isset($_SESSION['username'])) {
+    header("location:" . bookstore . "");
+}
 
-            $insert = $conn->prepare("INSERT INTO users (username, email, mypassword) VALUES (:username, :email, :mypassword)");
-            $insert->execute([
-                ':username'    => $username,
-                ':email'       => $email,
-                ':mypassword'  => password_hash($password,PASSWORD_DEFAULT),
-            ]);
 
-            header('location:login.php');
+if (isset($_POST['submit'])) {
+    if (empty($_POST['username']) or empty($_POST['email']) or empty($_POST['password'])) {
+        echo "<script>alert('Un ou plusieurs champs sont vides');</script>";
+    } else {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
 
-        }
+        $insert = $conn->prepare("INSERT INTO users (username, email, mypassword) VALUES (:username, :email, :mypassword)");
+        $insert->execute([
+            ':username'    => $username,
+            ':email'       => $email,
+            ':mypassword'  => password_hash($password, PASSWORD_DEFAULT),
+        ]);
+
+        header('location:login.php');
     }
+}
 
 ?>
 
@@ -75,13 +79,13 @@
                 <div class="">
                     <label for="" class="col-sm-2 col-form-label">Username</label>
                     <div class="">
-                        <input type="text" name="username" class="form-control" >
+                        <input type="text" name="username" class="form-control">
                     </div>
                 </div>
                 <div class="">
                     <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
                     <div class="">
-                        <input type="email" name="email" class="form-control" >
+                        <input type="email" name="email" class="form-control">
                     </div>
                 </div>
                 <div class="">
