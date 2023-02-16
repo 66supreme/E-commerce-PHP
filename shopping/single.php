@@ -33,6 +33,10 @@ if (isset($_GET['id'])) {
     $row->execute();
 
     $product = $row->fetch(PDO::FETCH_OBJ);
+
+
+    $panier = $conn->query("SELECT * FROM panier WHERE pro_id = '$id'  AND user_id= '$_SESSION[user_id]'");
+    $panier->execute();
 } else {
     echo "404";
 }
@@ -82,11 +86,15 @@ if (isset($_GET['id'])) {
                             <div class="">
                                 <input type="hidden" name="user_id" class="form-control" value="<?php echo $_SESSION['user_id']; ?>">
                             </div>
-
-                            <div class="cart mt-4 align-items-center">
-                                <button type="submit" name="submit" desablese class="btn btn-primary text-uppercase mr-2 px-4"><i class="fas fa-shopping-cart"></i> Ajouter au panier</button>
-                                <button type="submit" name="submit" class="btn btn-primary text-uppercase mr-2 px-4"><i class="fas fa-shopping-cart"></i> Ajouter au panier</button>
-                            </div>
+                            <?php if (isset($_SESSION['user_id'])) : ?>
+                                <div class="cart mt-4 align-items-center">
+                                    <?php if ($panier->rowCount() > 0) : ?>
+                                        <button type="submit" disabled class="btn btn-primary text-uppercase mr-2 px-4"><i class="fas fa-shopping-cart"></i> Déjà dans lepanier</button>
+                                    <?php else : ?>
+                                        <button type="submit" name="submit" class="btn btn-primary text-uppercase mr-2 px-4"><i class="fas fa-shopping-cart"></i> Ajouter au panier</button>
+                                    <?php endif ?>
+                                <?php endif ?>
+                                </div>
                         </form>
                     </div>
                 </div>
