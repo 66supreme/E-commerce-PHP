@@ -3,7 +3,7 @@
 
 <?php
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
 
     $pro_id = $_POST['pro_id'];
     $pro_name = $_POST['pro_name'];
@@ -13,7 +13,16 @@ if(isset($_POST['submit'])){
     $pro_file = $_POST['pro_file'];
     $user_id = $_POST['user_id'];
 
-    $insert = $conn->query("");
+    $insert = $conn->prepare("INSERT INTO panier (pro_id, pro_name, pro_image, pro_price, pro_amount, pro_file, user_id) VALUES (:pro_id, :pro_name, :pro_image, :pro_price, :pro_amount, :pro_file, :user_id)");
+        $insert->execute([
+            ':pro_id'    => $pro_id,
+            ':pro_name'       => $pro_name,
+            ':pro_image'  => $pro_image,
+            ':pro_price'  => $pro_price,
+            ':pro_amount'  => $pro_amount,
+            ':pro_file'  => $pro_file,
+            ':user_id'  => $user_id,
+        ]);
 }
 
 
@@ -24,7 +33,6 @@ if (isset($_GET['id'])) {
     $row->execute();
 
     $product = $row->fetch(PDO::FETCH_OBJ);
-
 } else {
     echo "404";
 }
@@ -57,26 +65,28 @@ if (isset($_GET['id'])) {
                                 <input type="text" name="pro_id" class="form-control" value="<?php echo $product->id; ?>" name="email">
                             </div>
                             <div class="">
-                                <input type="text" name="pro_name" class="form-control" value="<?php echo $product->name;?>" name="email">
+                                <input type="text" name="pro_name" class="form-control" value="<?php echo $product->name; ?>" name="email">
                             </div>
                             <div class="">
-                                <input type="text" name="pro_image" class="form-control" value="<?php echo $product->image;?>"  name="email">
+                                <input type="text" name="pro_image" class="form-control" value="<?php echo $product->image; ?>" name="email">
                             </div>
                             <div class="">
-                                <input type="text" name="pro_price" class="form-control" value="<?php echo $product->price;?>"  name="email">
+                                <input type="text" name="pro_price" class="form-control" value="<?php echo $product->price; ?>" name="email">
                             </div>
                             <div class="">
                                 <input type="text" name="pro_amount" class="form-control" value="1" name="email">
                             </div>
                             <div class="">
-                                <input type="text" name="pro_file" class="form-control" value="<?php echo $product->file;?>"  name="email">
+                                <input type="text" name="pro_file" class="form-control" value="<?php echo $product->file; ?>" name="email">
                             </div>
                             <div class="">
-                                <input type="text" name="user_id" class="form-control" value="<?php echo $_SESSION['user_id'];?>" name="email">
+                                <input type="text" name="user_id" class="form-control" value="<?php echo $_SESSION['user_id']; ?>" name="email">
+                            </div>
+
+                            <div class="cart mt-4 align-items-center">
+                                <button type="submit" name="submit" class="btn btn-primary text-uppercase mr-2 px-4"><i class="fas fa-shopping-cart"></i> Ajouter au panier</button>
                             </div>
                         </form>
-
-                        <div class="cart mt-4 align-items-center"> <button type="submit" name="submit" class="btn btn-primary text-uppercase mr-2 px-4"><i class="fas fa-shopping-cart"></i> Ajouter au panier</button> </div>
                     </div>
                 </div>
             </div>
@@ -86,9 +96,17 @@ if (isset($_GET['id'])) {
 <?php require('../includes/footer.php'); ?>
 
 <script>
-$(document).ready(function(){
-    $(document).on("submit",function(e){
-        var $formdata = $("#form-data").serialize()+"&submit=submit";
+    $(document).ready(function() {
+        $(document).on("submit", function(e) {
+            var formdata = $("#form-data").serialize()+"&submit=submit";
+            $.ajax({
+                type: "post",
+                url: "single.php?id=<?php echo $id; ?>",
+                data: formdata,
+                success: function(){
+                    alert('ajouté au panier avec succes');
+                }
+            });
+        })
     });
-});
 </script>
